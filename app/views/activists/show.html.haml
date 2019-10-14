@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Uuid:
+  = @activist.uuid
+
+= link_to 'Edit', edit_activist_path(@activist)
+\|
+= link_to 'Back', activists_path

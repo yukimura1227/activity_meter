@@ -1,0 +1,21 @@
+%h1 Listing activists
+
+%table
+  %thead
+    %tr
+      %th Uuid
+      %th
+      %th
+      %th
+
+  %tbody
+    - @activists.each do |activist|
+      %tr
+        %td= activist.uuid
+        %td= link_to 'Show', activist
+        %td= link_to 'Edit', edit_activist_path(activist)
+        %td= link_to 'Destroy', activist, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Activist', new_activist_path

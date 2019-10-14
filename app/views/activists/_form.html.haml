@@ -1,0 +1,13 @@
+= form_for @activist do |f|
+  - if @activist.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@activist.errors.count, "error")} prohibited this activist from being saved:"
+      %ul
+        - @activist.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :uuid
+    = f.text_field :uuid
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,2 @@
+class Activist < ApplicationRecord
+end
