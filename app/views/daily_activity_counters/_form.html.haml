@@ -1,0 +1,22 @@
+= form_for @daily_activity_counter do |f|
+  - if @daily_activity_counter.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@daily_activity_counter.errors.count, "error")} prohibited this daily_activity_counter from being saved:"
+      %ul
+        - @daily_activity_counter.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :type
+    = f.text_field :type
+  .field
+    = f.label :activist_id
+    = f.number_field :activist_id
+  .field
+    = f.label :date
+    = f.date_select :date
+  .field
+    = f.label :count
+    = f.number_field :count
+  .actions
+    = f.submit 'Save'

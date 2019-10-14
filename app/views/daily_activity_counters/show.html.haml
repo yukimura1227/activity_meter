@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Type:
+  = @daily_activity_counter.type
+%p
+  %b Activist:
+  = @daily_activity_counter.activist_id
+%p
+  %b Date:
+  = @daily_activity_counter.date
+%p
+  %b Count:
+  = @daily_activity_counter.count
+
+= link_to 'Edit', edit_daily_activity_counter_path(@daily_activity_counter)
+\|
+= link_to 'Back', daily_activity_counters_path

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_14_075401) do
+ActiveRecord::Schema.define(version: 2019_10_14_082414) do
 
   create_table "activists", force: :cascade do |t|
     t.string "uuid"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 2019_10_14_075401) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["blog_id"], name: "index_comments_on_blog_id"
+  end
+
+  create_table "daily_activity_counters", force: :cascade do |t|
+    t.string "type"
+    t.integer "activist_id"
+    t.date "date"
+    t.integer "count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

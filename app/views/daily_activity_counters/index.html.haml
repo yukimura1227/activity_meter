@@ -1,0 +1,27 @@
+%h1 Listing daily_activity_counters
+
+%table
+  %thead
+    %tr
+      %th Type
+      %th Activist
+      %th Date
+      %th Count
+      %th
+      %th
+      %th
+
+  %tbody
+    - @daily_activity_counters.each do |daily_activity_counter|
+      %tr
+        %td= daily_activity_counter.type
+        %td= daily_activity_counter.activist_id
+        %td= daily_activity_counter.date
+        %td= daily_activity_counter.count
+        %td= link_to 'Show', daily_activity_counter
+        %td= link_to 'Edit', edit_daily_activity_counter_path(daily_activity_counter)
+        %td= link_to 'Destroy', daily_activity_counter, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Daily activity counter', new_daily_activity_counter_path
