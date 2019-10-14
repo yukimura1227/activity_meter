@@ -1,5 +1,5 @@
 require 'rails_helper'
 
 RSpec.describe Activist, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { have_many(:daily_activity_counter) }
 end
