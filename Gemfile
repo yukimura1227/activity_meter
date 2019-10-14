@@ -94,4 +94,5 @@ group :test do
   gem 'database_cleaner'
   gem 'timecop'
   gem 'codecov', require: false, group: :test
+  gem 'shoulda-matchers'
 end
