@@ -1,0 +1,40 @@
+%svg
+  :ruby
+    #hue：色相、saturation：彩度、lightness：輝度
+    hue = 0
+    saturation = 75
+
+    count_of_split = 5
+    min_lightness = 49
+    max_lightness = 99
+    lightnes_step = (max_lightness - min_lightness) / (count_of_split-1)
+
+    max_count = @daily_activity_counters.map(&:count).max
+    min_count = 0
+    counter_step = (max_count - min_count) / (count_of_split)
+
+    lightness_array = []
+    counter_range_array = []
+    (count_of_split).times do |i|
+      lightness_array << min_lightness + i * lightnes_step
+      counter_range_array << max_count - i * counter_step
+    end
+    lightness_array.reverse!
+
+    puts lightness_array
+    puts '*' *50
+    puts counter_range_array
+
+  - x = 0
+  - @date_range.each_with_index do |date, i|
+    :ruby
+      if daily_activity_counter = @daily_activity_counters.select { |v| v.date == date }.first
+        position = counter_range_array.select{ |v| v < daily_activity_counter.count }.size
+        lightness = lightness_array[position]
+      else
+        lightness = max_lightness
+      end
+      x += 12 if i % 7 == 0
+      y = date.wday * 12
+
+    %rect{ x: x, y: y, width: "10", height: "10", fill: "hsl(#{hue}, #{saturation}%, #{lightness}%)" }
