@@ -1,7 +1,7 @@
 %svg
   :ruby
     #hue：色相、saturation：彩度、lightness：輝度
-    hue = 0
+    hue = params[:hue].presence || 0
     saturation = 75
 
     count_of_split = 5
