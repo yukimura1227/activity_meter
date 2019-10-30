@@ -8,6 +8,8 @@ class DailyActivityCountersController < ApplicationController
     from = params[:from]&.to_date || 1.year.ago.to_date
     to = params[:to]&.to_date || Date.current
     @target_range = from...to
+    html = render_to_string(partial: 'graph')
+    render json: { html: html }
   end
 
   # GET /daily_activity_counters
