@@ -96,3 +96,5 @@ group :test do
   gem 'codecov', require: false, group: :test
   gem 'shoulda-matchers'
 end
+
+gem 'faraday'
