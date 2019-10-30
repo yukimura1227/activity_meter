@@ -11,9 +11,9 @@
     max_lightness = 99
     lightnes_step = (max_lightness - min_lightness) / (count_of_split-1)
 
-    max_count = @daily_activity_counters.map(&:count).max
+    max_count = @counter_hash.max_by{ |key, count| count }[1]
     min_count = 0
-    counter_step = (max_count - min_count) / (count_of_split)
+    counter_step = ((max_count - min_count) / count_of_split.to_f).ceil
 
     lightness_array = []
     counter_range_array = []
@@ -26,8 +26,8 @@
   - x = 0
   - @target_range.each_with_index do |date, i|
     :ruby
-      if daily_activity_counter = @daily_activity_counters.select { |v| v.date == date }.first
-        position = counter_range_array.select{ |v| v < daily_activity_counter.count }.size
+      if daily_activity_count =  @counter_hash[date]
+        position = counter_range_array.select{ |v| v < daily_activity_count }.size
         lightness = lightness_array[position]
       else
         lightness = max_lightness

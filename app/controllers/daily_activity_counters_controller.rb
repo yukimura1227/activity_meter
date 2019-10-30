@@ -3,6 +3,8 @@ class DailyActivityCountersController < ApplicationController
 
   def graph
     @daily_activity_counters = DailyActivityCounter.where(activist_id: params[:activist_id], type: params[:type])
+    @counter_hash = {}
+    @daily_activity_counters.each { |v| @counter_hash[v.date] = v.count }
     from = params[:from]&.to_date || 1.year.ago.to_date
     to = params[:to]&.to_date || Date.current
     @target_range = from...to
