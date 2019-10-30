@@ -22,7 +22,7 @@
     lightness_array.reverse!
 
   - x = 0
-  - @date_range.each_with_index do |date, i|
+  - @target_range.each_with_index do |date, i|
     :ruby
       if daily_activity_counter = @daily_activity_counters.select { |v| v.date == date }.first
         position = counter_range_array.select{ |v| v < daily_activity_counter.count }.size

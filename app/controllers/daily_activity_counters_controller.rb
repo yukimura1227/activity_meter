@@ -3,7 +3,7 @@ class DailyActivityCountersController < ApplicationController
 
   def graph
     @daily_activity_counters = DailyActivityCounter.where(activist_id: params[:activist_id])
-    @date_range = 1.month.ago.to_date...Date.current
+    @target_range = 1.month.ago.to_date...Date.current
   end
 
   # GET /daily_activity_counters
