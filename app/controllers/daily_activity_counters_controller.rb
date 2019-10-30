@@ -2,8 +2,10 @@ class DailyActivityCountersController < ApplicationController
   before_action :set_daily_activity_counter, only: [:show, :edit, :update, :destroy]
 
   def graph
-    @daily_activity_counters = DailyActivityCounter.where(activist_id: params[:activist_id])
-    @target_range = 1.month.ago.to_date...Date.current
+    @daily_activity_counters = DailyActivityCounter.where(activist_id: params[:activist_id], type: params[:type])
+    from = params[:from]&.to_date || 1.year.ago.to_date
+    to = params[:to]&.to_date || Date.current
+    @target_range = from...to
   end
 
   # GET /daily_activity_counters
