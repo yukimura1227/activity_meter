@@ -7,3 +7,41 @@
 = link_to 'Edit', edit_activist_path(@activist)
 \|
 = link_to 'Back', activists_path
+:javascript
+  function hoge() {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+      var result = document.getElementById('graph');
+      if (req.readyState == 4) { // 通信の完了時
+        if (req.status == 200) { // 通信の成功時
+          json = JSON.parse(req.responseText);
+          result.innerHTML = json.html;
+        }
+      } else {
+        result.innerHTML = "通信中...";
+      }
+    }
+    type = document.getElementById("js-type").value;
+    from = document.getElementById("js-from").value;
+    to = document.getElementById("js-to").value;
+    hue = document.getElementById("js-hue").value;
+    url = '/daily_activity_counters/graph/1'
+    url += '?type=' + encodeURIComponent(type);
+    url += '&from=' + encodeURIComponent(from);
+    url += '&to=' + encodeURIComponent(to);
+    url += '&hue=' + encodeURIComponent(hue);
+    req.open('GET', url, true);
+    // from=2014-07-01&to=2014-12-31&hue=30
+    req.send(null);
+  }
+%div
+  %select{ id: 'js-type' }
+    %option{ value: 'DailyActivityCounter::Qiita' }
+      Qiita
+  %input{ type: 'date', id: 'js-from', placeholder: 'fromを入力してください' }
+  %input{ type: 'date', id: 'js-to', placeholder: 'toを入力してください' }
+  %input{ type: 'number', id: 'js-hue', placeholder: 'hueを入力してください' }
+  %button{ onClick: 'hoge();' }
+    graphを取得
+#graph{  }
+  -# input_type.dataset.
