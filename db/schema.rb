@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_14_082414) do
+ActiveRecord::Schema.define(version: 2019_10_31_142341) do
 
   create_table "activists", force: :cascade do |t|
     t.string "uuid"
@@ -33,6 +33,11 @@ ActiveRecord::Schema.define(version: 2019_10_14_082414) do
     t.integer "count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "year_month"
+    t.integer "year"
+    t.index ["activist_id", "date"], name: "index_daily_activity_counters_on_activist_id_and_date"
+    t.index ["activist_id", "year"], name: "index_daily_activity_counters_on_activist_id_and_year"
+    t.index ["activist_id", "year_month"], name: "index_daily_activity_counters_on_activist_id_and_year_month"
   end
 
 end
