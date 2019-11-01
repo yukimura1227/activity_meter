@@ -2,12 +2,25 @@ class DailyActivityCountersController < ApplicationController
   before_action :set_daily_activity_counter, only: [:show, :edit, :update, :destroy]
 
   def graph
-    @daily_activity_counters = DailyActivityCounter.where(activist_id: params[:activist_id], type: params[:type])
-    @counter_hash = {}
-    @daily_activity_counters.each { |v| @counter_hash[v.date] = v.count }
     from = params[:from]&.to_date || 1.year.ago.to_date
     to = params[:to]&.to_date || Date.current
-    @target_range = from...to
+    return if from > to
+
+    @counter_hash = {}
+    daily_activity_counters = DailyActivityCounter.where(activist_id: params[:activist_id], type: params[:type])
+    if params[:monthly].present?
+      monthly_activity_counters = daily_activity_counters.group(:year_month).count
+      monthly_activity_counters.each { |year_month, count| @counter_hash[year_month] = count }
+      @target_range = []
+      current = from.beginning_of_month
+      while( current <= to ) do
+        @target_range << current.strftime('%Y-%m')
+        current = current.next_month
+      end
+    else
+      daily_activity_counters.each { |v| @counter_hash[v.date] = v.count }
+      @target_range = from...to
+    end
     html = render_to_string(partial: 'graph')
     render json: { html: html }
   end

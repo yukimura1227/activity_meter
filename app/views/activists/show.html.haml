@@ -8,7 +8,7 @@
 \|
 = link_to 'Back', activists_path
 :javascript
-  function hoge() {
+  function get_graph() {
     var req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       var result = document.getElementById('graph');
@@ -25,11 +25,13 @@
     from = document.getElementById("js-from").value;
     to = document.getElementById("js-to").value;
     hue = document.getElementById("js-hue").value;
+    monthly_flag = document.getElementById("js-monthly-flag").value;
     url = '/daily_activity_counters/graph/1'
-    url += '?type=' + encodeURIComponent(type);
-    url += '&from=' + encodeURIComponent(from);
-    url += '&to=' + encodeURIComponent(to);
-    url += '&hue=' + encodeURIComponent(hue);
+    url += '?type='    + encodeURIComponent(type);
+    url += '&from='    + from;
+    url += '&to='      + to;
+    url += '&hue='     + hue;
+    url += '&monthly=' + monthly_flag;
     req.open('GET', url, true);
     // from=2014-07-01&to=2014-12-31&hue=30
     req.send(null);
@@ -38,10 +40,15 @@
   %select{ id: 'js-type' }
     %option{ value: 'DailyActivityCounter::Qiita' }
       Qiita
-  %input{ type: 'date', id: 'js-from', placeholder: 'fromを入力してください' }
-  %input{ type: 'date', id: 'js-to', placeholder: 'toを入力してください' }
-  %input{ type: 'number', id: 'js-hue', placeholder: 'hueを入力してください' }
-  %button{ onClick: 'hoge();' }
+  %select{ id: 'js-monthly-flag' }
+    %option{ value: '' }
+      日次で表示
+    %option{ value: '1' }
+      月次で表示
+  %input{ type: 'date'  , id: 'js-from', placeholder: 'fromを入力してください' }
+  %input{ type: 'date'  , id: 'js-to'  , placeholder: 'toを入力してください' }
+  %input{ type: 'number', id: 'js-hue' , placeholder: 'hueを入力してください' }
+  %button{ onClick: 'get_graph();' }
     graphを取得
 #graph{  }
   -# input_type.dataset.

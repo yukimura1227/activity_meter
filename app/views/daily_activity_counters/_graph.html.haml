@@ -24,17 +24,32 @@
     lightness_array.reverse!
 
   - x = 0
-  - @target_range.each_with_index do |date, i|
-    :ruby
-      if daily_activity_count =  @counter_hash[date]
-        position = counter_range_array.select{ |v| v < daily_activity_count }.size
-        lightness = lightness_array[position]
-      else
-        lightness = max_lightness
-      end
-      x += 12 if i % 7 == 0
-      y = date.wday * 12 + 12
+  - if params[:monthly].present?
+    - @target_range.each_with_index do |year_month, i|
+      :ruby
+        if monthly_activity_count =  @counter_hash[year_month]
+          position = counter_range_array.select{ |v| v < monthly_activity_count }.size
+          lightness = lightness_array[position]
+        else
+          lightness = max_lightness
+        end
+        x += 12
+        y = 12
+      %rect{ x: x, y: y, width: "10", height: "120", fill: "hsl(#{hue}, #{saturation}%, #{lightness}%)" }
+        %title
+          #{year_month}:#{monthly_activity_count||0}
+  - else
+    - @target_range.each_with_index do |date, i|
+      :ruby
+        if daily_activity_count =  @counter_hash[date]
+          position = counter_range_array.select{ |v| v < daily_activity_count }.size
+          lightness = lightness_array[position]
+        else
+          lightness = max_lightness
+        end
+        x += 12 if i % 7 == 0
+        y = date.wday * 12 + 12
 
-    %rect{ x: x, y: y, width: "10", height: "10", fill: "hsl(#{hue}, #{saturation}%, #{lightness}%)" }
-      %title
-        #{date}:#{daily_activity_count||0}
+      %rect{ x: x, y: y, width: "10", height: "10", fill: "hsl(#{hue}, #{saturation}%, #{lightness}%)" }
+        %title
+          #{date}:#{daily_activity_count||0}
