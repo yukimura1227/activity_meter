@@ -19,7 +19,7 @@ class DailyActivityCountersController < ApplicationController
       end
     else
       daily_activity_counters.each { |v| @counter_hash[v.date] = v.count }
-      @target_range = from...to
+      @target_range = from..to
     end
     html = render_to_string(partial: 'graph')
     render json: { html: html }
